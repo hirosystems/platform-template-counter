@@ -1,7 +1,10 @@
 ;; An on-chain counter that stores a count for each individual
 
 ;; Define a map data structure
-(define-map counters principal uint)
+(define-map counters
+  principal
+  uint
+)
 
 ;; Function to retrieve the count for a given individual
 (define-read-only (get-count (who principal))

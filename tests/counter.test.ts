@@ -11,7 +11,7 @@ describe("test individual counters", () => {
       "counter",
       "get-count",
       [Cl.standardPrincipal(address2)],
-      address1
+      address1,
     );
     expect(countResponse.result).toBeUint(0);
   });
@@ -21,7 +21,7 @@ describe("test individual counters", () => {
       "counter",
       "count-up",
       [],
-      address1
+      address1,
     );
     expect(incrementResponse.result).toBeOk(Cl.bool(true));
 
@@ -30,7 +30,7 @@ describe("test individual counters", () => {
       "counter",
       "get-count",
       [Cl.standardPrincipal(address1)],
-      address1
+      address1,
     );
     expect(updatedCountResponse.result).toBeUint(1);
   });
@@ -40,7 +40,7 @@ describe("test individual counters", () => {
       "counter",
       "count-up",
       [],
-      address2
+      address2,
     );
     expect(incrementResponse.result).toBeOk(Cl.bool(true));
 
@@ -48,7 +48,7 @@ describe("test individual counters", () => {
       "counter",
       "count-up",
       [],
-      address2
+      address2,
     );
     expect(incrementResponse.result).toBeOk(Cl.bool(true));
 
@@ -57,9 +57,8 @@ describe("test individual counters", () => {
       "counter",
       "get-count",
       [Cl.standardPrincipal(address2)],
-      address1
+      address1,
     );
     expect(updatedCountResponse.result).toBeUint(2);
   });
-
 });
