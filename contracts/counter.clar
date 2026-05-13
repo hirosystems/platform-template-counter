@@ -1,17 +1,30 @@
-;; An on-chain counter that stores a count for each individual
+;; An on-chain counter that stores a count for each caller
 
-;; Define a map data structure
+(define-constant ERR_COUNTER_OVERFLOW (err u100))
+(define-constant MAX_UINT u340282366920938463463374607431768211455)
+
 (define-map counters
   principal
   uint
 )
 
-;; Function to retrieve the count for a given individual
 (define-read-only (get-count (who principal))
   (default-to u0 (map-get? counters who))
 )
 
-;; Function to increment the count for the caller
 (define-public (count-up)
-  (ok (map-set counters tx-sender (+ (get-count tx-sender) u1)))
+  (let
+    (
+      (caller contract-caller)
+      (current-count (get-count caller))
+    )
+    (asserts! (< current-count MAX_UINT) ERR_COUNTER_OVERFLOW)
+    (let
+      (
+        (new-count (+ current-count u1))
+      )
+      (map-set counters caller new-count)
+      (ok new-count)
+    )
+  )
 )
